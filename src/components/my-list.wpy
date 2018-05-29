@@ -69,7 +69,21 @@ export default class MyList extends wepy.component {
     console.log('syncTitle', this.syncTitle)
     console.log('twoWayTitle', this.twoWayTitle)
     console.log('parentTitle', this.$parent.parentTitle)
-    console.log('<==============>')
+
+    //     title parentTitle
+    //     syncTitle parentTitle
+    //     twoWayTitle parentTitle
+    //     <==============>
+    //     title parentTitle
+    //     syncTitle childTitle
+    //     twoWayTitle childTitle
+    //     parentTitle childTitle
+    //     <==============>
+    //     title parentTitle
+    //     syncTitle parentTitle-changed
+    //     twoWayTitle childTitle
+    //     parentTitle parentTitle-changed
+
   }
 }
 </script>
