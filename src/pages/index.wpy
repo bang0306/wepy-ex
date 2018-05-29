@@ -18,8 +18,11 @@
 <template>
   <view class="container">
     <view class="userinfo" @tap="handleViewTap">
+      <open-data class="userinfo-avatar" type="userAvatarUrl"></open-data>
+      <open-data class="userinfo-nickname" type="userNickName"></open-data>
+      <!-- <button open-type="getUserInfo" bindgetuserinfo="onGetUserInfo">获取用户信息</button>
       <image class="userinfo-avatar" src="{{ userInfo.avatarUrl }}" background-size="cover"/>
-      <view class="userinfo-nickname">{{ userInfo.nickName }}</view>
+      <view class="userinfo-nickname">{{ userInfo.nickName }}</view> -->
     </view>
 
     <panel>
@@ -74,6 +77,7 @@
     </panel>
 
     <toast />
+    <myList></myList>
   </view>
 </template>
 
@@ -86,6 +90,7 @@
   import Group from '../components/group'
   import Toast from 'wepy-com-toast'
   import testMixin from '../mixins/test'
+  import MyList from '../components/my-list'
 
   console.log('moduleA ignored: ', moduleA) // => moduleA ignored: {}
 
@@ -99,7 +104,8 @@
       counter2: Counter,
       list: List,
       group: Group,
-      toast: Toast
+      toast: Toast,
+      myList: MyList
     }
 
     mixins = [testMixin]
@@ -166,6 +172,10 @@
     }
 
     methods = {
+      onGetUserInfo (e) {
+        // const { nickName, avatarUrl } = e.detail.userInfo
+        this.userInfo = e.detail.userInfo
+      },
       plus () {
         this.mynum++
       },

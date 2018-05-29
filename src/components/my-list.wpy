@@ -1,0 +1,22 @@
+<template>
+  <view class="my-list">
+    <repeat for="{{list}}">
+      <view>{{item}}</view>
+    </repeat>
+    <button @tap="onTap">自定义按钮</button>
+  </view>
+</template>
+<script>
+import wepy from 'wepy'
+export default class MyList extends wepy.component {
+  data = {
+    list: []
+  }
+  methods = {
+    onTap () {
+      console.log('tapped')
+      this.list.push(this.list.length)
+    }
+  }
+}
+</script>
