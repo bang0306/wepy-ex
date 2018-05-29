@@ -5,11 +5,27 @@
     </repeat>
     <view>sum: {{sum}}</view>
     <button @tap="onTap">自定义按钮</button>
+    <view>{{title}}</view>
+    <view>{{syncTitle}}</view>
+    <view>{{twoWayTitle}}</view>
   </view>
 </template>
 <script>
 import wepy from 'wepy'
 export default class MyList extends wepy.component {
+  props = {
+    title: String,
+    syncTitle: {
+      type: String,
+      default: 'null'
+    },
+    twoWayTitle: {
+      type: String,
+      default: 'nothing',
+      // twoWay 代表子组件向父组件单向传递数据
+      twoWay: true
+    }
+  }
   data = {
     list: []
   }
@@ -30,6 +46,30 @@ export default class MyList extends wepy.component {
     sum (newValue, oldValue) {
       console.log(oldValue, '=>', newValue)
     }
+  }
+
+  onLoad () {
+    console.log('title', this.title)
+    console.log('syncTitle', this.syncTitle)
+    console.log('twoWayTitle', this.twoWayTitle)
+    console.log('<==============>')
+
+    this.twoWayTitle = 'childTitle'
+    this.$apply()
+    console.log('title', this.title)
+    console.log('syncTitle', this.syncTitle)
+    console.log('twoWayTitle', this.twoWayTitle)
+    console.log('parentTitle', this.$parent.parentTitle)
+    console.log('<==============>')
+
+    this.$parent.parentTitle = 'parentTitle-changed'
+    this.$parent.$apply()
+    this.$apply()
+    console.log('title', this.title)
+    console.log('syncTitle', this.syncTitle)
+    console.log('twoWayTitle', this.twoWayTitle)
+    console.log('parentTitle', this.$parent.parentTitle)
+    console.log('<==============>')
   }
 }
 </script>

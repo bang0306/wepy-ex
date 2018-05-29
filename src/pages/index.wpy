@@ -77,7 +77,12 @@
     </panel>
 
     <toast />
-    <myList></myList>
+    <myList
+      :title="parentTitle"
+      :syncTitle.sync="parentTitle"
+      :twoWayTitle="parentTitle"
+    >
+    </myList>
   </view>
 </template>
 
@@ -112,6 +117,7 @@
 
     data = {
       mynum: 20,
+      parentTitle: 'parentTitle',
       userInfo: {
         nickName: '加载中...'
       },
