@@ -83,6 +83,8 @@
       :twoWayTitle="parentTitle"
     >
     </myList>
+    <button @tap="broadcastEvent">BroadCast some event</button>
+    <button @tap="invokeCompMethod">Invoke Component's method</button>
   </view>
 </template>
 
@@ -223,6 +225,13 @@
       counterEmit (...args) {
         let $event = args[args.length - 1]
         console.log(`${this.$name} receive ${$event.name} from ${$event.source.$name}`)
+      },
+      broadcastEvent () {
+        this.$broadcast('broadcast-event', 4, 3, 2, 1)
+      },
+      invokeCompMethod () {
+        console.log('invoke')
+        this.$invoke('myList', 'setInvokedData', ' invoked', 333)
       }
     }
 
@@ -230,6 +239,9 @@
       'index-emit': (...args) => {
         let $event = args[args.length - 1]
         console.log(`${this.$name} receive ${$event.name} from ${$event.source.$name}`)
+      },
+      'some-event': (...args) => {
+        console.log(args)
       }
     }
 

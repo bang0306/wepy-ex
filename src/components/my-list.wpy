@@ -1,13 +1,18 @@
 <template>
   <view class="my-list">
+
     <repeat for="{{list}}">
       <view>{{item}}</view>
     </repeat>
     <view>sum: {{sum}}</view>
     <button @tap="onTap">自定义按钮</button>
+
     <view>{{title}}</view>
     <view>{{syncTitle}}</view>
     <view>{{twoWayTitle}}</view>
+    
+    <button @tap="emitEvent">emit some event</button>
+    <view>data set by invoked my method: {{invokedData}}</view>
   </view>
 </template>
 <script>
@@ -27,12 +32,21 @@ export default class MyList extends wepy.component {
     }
   }
   data = {
-    list: []
+    list: [],
+    invokedData: 'not invoked yet'
   }
   methods = {
     onTap () {
       console.log('tapped')
       this.list.push(this.list.length)
+    },
+    emitEvent () {
+      this.$emit('some-event', 1, 2, 3, 4)
+    },
+
+    // 被其他组件/页面invoke的方法也要放在methods中
+    setInvokedData (txt, val) {
+      this.invokedData = 'haha' + txt + val * 2
     }
   }
   computed = {
@@ -45,6 +59,12 @@ export default class MyList extends wepy.component {
     // 可以监听计算属性
     sum (newValue, oldValue) {
       console.log(oldValue, '=>', newValue)
+    }
+  }
+
+  events = {
+    'broadcast-event': (...args) => {
+      console.log(args)
     }
   }
 
@@ -83,7 +103,6 @@ export default class MyList extends wepy.component {
     //     syncTitle parentTitle-changed
     //     twoWayTitle childTitle
     //     parentTitle parentTitle-changed
-
   }
 }
 </script>
