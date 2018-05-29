@@ -3,6 +3,7 @@
     <repeat for="{{list}}">
       <view>{{item}}</view>
     </repeat>
+    <view>sum: {{sum}}</view>
     <button @tap="onTap">自定义按钮</button>
   </view>
 </template>
@@ -16,6 +17,18 @@ export default class MyList extends wepy.component {
     onTap () {
       console.log('tapped')
       this.list.push(this.list.length)
+    }
+  }
+  computed = {
+    sum () {
+      return this.list.reduce((prev, curr) => prev + curr, 0)
+    }
+  }
+
+  watch = {
+    // 可以监听计算属性
+    sum (newValue, oldValue) {
+      console.log(oldValue, '=>', newValue)
     }
   }
 }
